@@ -63,6 +63,30 @@ bool searchWord(TrieNode* root, string word) {
 
 }
 
+void deleteWord(TrieNode *root, string word)
+{
+        // base case
+        if (word.length() == 0 && root->isTerminal == true)
+        {
+                cout << "Match Found and deleted" << endl;
+                root->isTerminal = false;
+                return;
+        }
+        char ch = word[0];
+        int index = ch - 'a';
+        TrieNode *child;
+        if (root->children[index] != NULL)
+        {
+                child = root->children[index];
+                // recursion
+                return deleteWord(child, word.substr(1));
+        }
+        else
+        {
+                cout << "Match Not Found" << endl;
+        }
+}
+
 int main() {
   cout<<"Trie Implementation"<<endl;
   TrieNode* root = new TrieNode('-');
@@ -71,6 +95,8 @@ int main() {
   insertWord(root, "coding");
   insertWord(root, "code");
   insertWord(root, "coder");
+  insertWord(root, "hello");
+  deleteWord(root, "hello");
   cout << "Searching " << endl;
   if(searchWord(root,"cod")) {
           cout << "present" << endl;
